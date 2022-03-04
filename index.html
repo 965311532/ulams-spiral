@@ -1,216 +1,37 @@
+<!doctype html>
 <html>
 
-<div class="container">
-    <div class="info">
-        <h1>
-            <a href="https://en.wikipedia.org/wiki/Ulam_spiral" target="_blank">Ulam's Spiral</a>
-        </h1>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ulam's Spiral</title>
+    <script src="js/app.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
 
-        <blockquote cite="https://en.wikipedia.org/wiki/Ulam_spiral">
-            <p>The Ulam spiral or prime spiral is a graphical depiction of the set of prime numbers, 
-                devised by mathematician Stanisław Ulam in 1963 and popularized in Martin Gardner's Mathematical Games
+<body>
+    <div class="main-container">
+        <div class="info">
+            <h1>
+                <a href="https://en.wikipedia.org/wiki/Ulam_spiral" target="_blank">Ulam's Spiral</a>
+            </h1>
+
+            <p>The Ulam spiral or prime spiral is a graphical depiction of the set of prime numbers,
+                devised by mathematician Stanisław Ulam in 1963 and popularized in Martin Gardner's Mathematical
+                Games
                 column in Scientific American a short time later. It is constructed by writing the positive
-                integers in a square spiral and specially marking the prime numbers.</p>
-          </blockquote>
+                integers in a square spiral and specially marking the prime numbers.<a
+                    href="https://github.com/965311532/ulams-spiral" target="_blank">Wikipedia</a></p>
+        </div>
 
+        <div class="canvas-wrapper">
+            <canvas id="canvas">Canvas isn't supported ...</canvas>
+        </div>
     </div>
-    <div id="canvas-wrapper">
-        <canvas id="canvas" width="1000" height="1000"></canvas>
+
+    <div class="footer">
+        <p>made by <a href="https://github.com/965311532/ulams-spiral" target="_blank">Gabriele Armento</a></p>
     </div>
-</div>
-
-<script type="text/javascript">
-
-    var canvas;
-    var ctx;
-    var width;
-    var height;
-
-    var radius = 3;
-    var stepSize = 3;
-    var thisManySteps = 1;
-    var stepTracer = 0;
-    var stepTracerCounter = 1;
-    var direction = [1, 0]; // direction vector
-    var n = 1;
-
-    var posX;
-    var posY;
-    var posXOld;
-    var posYOld;
-
-    var intervalId;
-
-    onload = function () {
-
-        canvas = document.getElementById('canvas');
-        ctx = canvas.getContext('2d');
-
-        //ctx.translate(0.5, 0.5);
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = "black";
-
-        width = ctx.canvas.width;
-        height = ctx.canvas.height;
-
-        posX = width / 2;
-        posY = height / 2;
-
-        intervalId = setInterval(draw, 0);
-
-    };
-
-
-    function rotateVector(vec, ang) {
-        ang = -ang * (Math.PI / 180);
-        var cos = Math.cos(ang);
-        var sin = Math.sin(ang);
-        return new Array(Math.round(10000 * (vec[0] * cos - vec[1] * sin)) / 10000,
-            Math.round(10000 * (vec[0] * sin + vec[1] * cos)) / 10000);
-    }
-
-    function drawCircle(ctx, x, y, radius, fill, stroke, strokeWidth) {
-        ctx.beginPath()
-        ctx.arc(x, y, radius, 0, 2 * Math.PI, false)
-        if (fill) {
-            ctx.fillStyle = fill
-            ctx.fill()
-        }
-        if (stroke) {
-            ctx.lineWidth = strokeWidth
-            ctx.strokeStyle = stroke
-            ctx.stroke()
-        }
-    }
-
-    function isPrime(num) {
-        if (num <= 3) return num > 1;
-        if ((num % 2 === 0) || (num % 3 === 0)) return false;
-        let count = 5;
-        while (Math.pow(count, 2) <= num) {
-            if (num % count === 0 || num % (count + 2) === 0) return false;
-            count += 6;
-        }
-        return true;
-    }
-
-    function draw() {
-        console.log(n, stepTracer, thisManySteps);
-
-        //cxt.translate(0.5,0.5); // fixes blurriness
-
-        // black border
-        // ctx.strokeRect(0, 0, width, height);
-
-        // ctx.fillStyle = 'white';
-        // ctx.fillRect(posX, posY, 100, 100);
-
-        // ctx.fillStyle = 'black';
-        // ctx.font = '20px serif';
-        // ctx.textAlign = 'center';
-        // ctx.textBaseline = 'middle'
-        // ctx.fillText(n, posX, posY);
-
-        if (isPrime(n)) {
-            ctx.fillStyle = 'black';
-            ctx.fillRect(posX, posY, radius, radius);
-        }
-
-        // set line stroke and line width
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = 1;
-
-        // ctx.beginPath();
-        // ctx.moveTo(posX, posY);
-        // ctx.lineTo(posXOld, posYOld);
-        // ctx.stroke();
-
-        posXOld = posX;
-        posYOld = posY;
-
-        if (stepTracer == thisManySteps) {
-            direction = rotateVector(direction, 90);
-            if (stepTracerCounter == 2) {
-                stepTracerCounter = 0;
-                thisManySteps++;
-            }
-            stepTracer = 0;
-            stepTracerCounter += 1;
-        }
-
-        posX += direction[0] * stepSize;
-        posY += direction[1] * stepSize;
-        stepTracer++;
-        n++;
-
-        if (!(posY > 0 && posY < height && posX > 0 && posX < width)) {
-            clearInterval(intervalId);
-        }
-
-    };
-
-
-</script>
-
-<style>
-    body {
-        margin: 0;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .container {
-        font-family: arial;
-        font-size: 24px;
-        width: 100vw;
-        height: 100vh;
-        /* Center child horizontally*/
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: whitesmoke;
-    }
-
-    .info {
-        font-family: arial;
-        font-size: 20px;
-        margin: 0 auto;
-        margin-left: 10%;
-        width: 60%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .info h1 {
-        text-align: center;
-        margin: 10px auto;
-    }
-
-    .info blockquote {
-        width: 60%;
-        text-align: left;
-    }
-
-    #canvas-wrapper {
-        margin: -15%;
-        margin-right: 0%;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    a {
-        color: black;
-    }
-
-</style>
-
+</body>
 
 </html>
