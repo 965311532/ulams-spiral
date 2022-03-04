@@ -2,7 +2,7 @@ body {
         margin: 0;
         overflow: hidden;
         font-family: arial;
-        font-size: 24px;
+        font-size: 30px;
         background-color: white;
         display: flex;
         height: 100vh;
@@ -11,26 +11,26 @@ body {
     }
 
 .main-container {
-    flex: 85%;
+    flex: 8;
+    flex: auto;
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    background-color: red;
-    padding: 2%;
+    justify-content: center;
 }
 
 .info {
     font-size: 20px;
-    flex: 50%;
+    flex: 4;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: green;
 
 }
 
 .info h1 {
+    font-size: 60px;
+    font-family: 'Times New Roman', Times, serif;
     text-align: center;
 }
 
@@ -40,19 +40,33 @@ body {
 }
 
 .canvas-wrapper {
-    flex: 50%;
     display: flex;
+    flex: 2;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 60%;
     aspect-ratio: 1;
-    background-color: aqua;
+    margin-right: 15%;
 }
 
 .footer {
-    flex: 2;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    flex: 1;
     text-align: center;
-    background-color: blue;
+    color: grey;
+}
+
+.footer a {
+    text-decoration: none;
+    color: grey;
+    font-weight: bolder;
+}
+
+.footer a:hover {
+    color: grey;
+    font-weight: bolder;
+    text-decoration: underline;
 }
 
 @media (max-width: 700px) {
@@ -64,7 +78,6 @@ body {
         margin: 0;
         height: auto;
         overflow-y: scroll;
-        font-family: arial;
-        font-size: 24px;
+        font-size: 20px;
         }
 }

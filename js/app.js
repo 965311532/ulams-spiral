@@ -4,7 +4,7 @@ var ctx;
 // How many numbers should be on
 // the side of the square once it's done
 // making the spiral
-var sideSize = 150;
+var sideSize = 100;
 var stepSize;
 var posX;
 var posY;
@@ -16,15 +16,26 @@ var intervalId;
 
 onload = function () {
 
+    wrapper = document.getElementsByClassName('canvas-wrapper')
     canvas = document.getElementById('canvas');
-    ctx = canvas.getContext('2d');
-    fitToContainer(ctx.canvas);
-
+    ctx = canvas.getContext("2d");
+    fitToContainer(canvas);
     posX = Math.round(canvas.width / 2);
     posY = Math.round(canvas.height / 2);
     stepSize = Math.round(canvas.width / sideSize)
     intervalId = setInterval(draw, 0.01);
 };
+
+// Maybe this will fix the low definition canvas (unused for now)
+function getHiPPIContext(cv, w, h) {
+    let ratio = window.devicePixelRatio;
+    console.log(ratio)
+    cv.width = w * ratio;
+    cv.height = h * ratio;
+    cv.style.width = w + "px";
+    cv.style.height = h + "px";
+    return cv.getContext("2d").scale(ratio, ratio);
+}
 
 function fitToContainer(canvas) {
     canvas.style.width = '100%';
@@ -69,11 +80,6 @@ function draw() {
         return null;
     }
 
-    // Logging
-    console.log(`size(side, step): ${[sideSize, stepSize]}
-canvas(width, height): ${[canvas.width, canvas.height]}
-pos(X, Y): ${[posX, posY]}`
-    )
 
     // Set line stroke and line width
     // ctx.strokeStyle = 'grey';
